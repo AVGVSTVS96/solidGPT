@@ -21,7 +21,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100dvh;
+  height: 100vh;
   margin: 0;
 
   /* background-color: hsl(240, 45%, 9%); */

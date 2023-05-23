@@ -1,9 +1,8 @@
 import os
 from typing import List, Optional
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, StreamingResponse
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import openai
 from openai.error import OpenAIError
@@ -12,9 +11,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
-templates = Jinja2Templates(directory="templates")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
@@ -23,9 +28,9 @@ class Message(BaseModel):
     content: str
 
 
-@app.get("/", response_class=HTMLResponse)
-def index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+class Gpt4Request(BaseModel):
+    messages: List[Message]
+    model_type: str
 
 
 async def generate(messages: List[Message], model_type: str):
@@ -43,11 +48,6 @@ async def generate(messages: List[Message], model_type: str):
 
     except OpenAIError as e:
         yield f"{type(e).__name__}: {str(e)}"
-
-
-class Gpt4Request(BaseModel):
-    messages: List[Message]
-    model_type: str
 
 
 @app.post("/gpt4")

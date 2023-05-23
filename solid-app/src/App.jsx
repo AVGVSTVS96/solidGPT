@@ -1,7 +1,7 @@
 import { createSignal } from "solid-js";
-import styles from './App.module.css'; 
-import styles from './tokyo-night-dark.min.css';
-import Chat from './chat.jsx';
+import styles from "./App.module.css";
+import "./tokyo-night-dark.min.css";
+import Chat from "./chat.jsx";
 
 function App() {
   const [systemMessage, setSystemMessage] = createSignal("");
@@ -12,9 +12,11 @@ function App() {
   };
 
   return (
-    <div class={styles.menubar}> 
-      <button class={styles.settingsToggle} id="settings-toggle">Settings</button>
-      <div class={styles.settingsDropdown}>
+    <div class={styles.menubar}>
+      <button class={styles["settings-toggle"]} id="settings-toggle">
+        Settings
+      </button>
+      <div class={styles["settings-dropdown"]}>
         <input
           type="text"
           class={styles.input}
@@ -23,7 +25,7 @@ function App() {
           value={systemMessage()}
           onInput={(e) => setSystemMessage(e.target.value)}
         />
-        <div class={styles.modelToggleContainer}>
+        <div class={styles["model-toggle-container"]}>
           <label class={styles.switch}>
             <input
               type="checkbox"
