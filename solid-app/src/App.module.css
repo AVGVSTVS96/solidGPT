@@ -1,33 +1,295 @@
-.App {
-  text-align: center;
+html {
+  scrollbar-color: hsla(0, 0%, 60%, 0.2) transparent;
 }
 
-.logo {
-  animation: logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 8px;
+  height: 10px;
 }
 
-.header {
-  background-color: #282c34;
-  min-height: 100vh;
+::-webkit-scrollbar-thumb {
+  background-color: hsla(0, 0%, 60%, 0.15);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: hsla(0, 0%, 60%, 0.25);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  margin: 0;
+
+  /* background-color: hsl(240, 45%, 9%); */
+  background-image: radial-gradient(
+      circle at center center,
+      transparent 50%,
+      rgb(0, 0, 0) 200%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(63, 63, 63, 0.2) 0px,
+      rgba(63, 63, 63, 0.2) 1px,
+      transparent 1px,
+      transparent 38px /* Control Grid Size */
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(63, 63, 63, 0.2) 0px,
+      rgba(63, 63, 63, 0.2) 1px,
+      transparent 1px,
+      transparent 38px /* Control Grid Size */
+    ),
+    linear-gradient(90deg, hsl(240, 17%, 2%), hsl(235, 50%, 9%));
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: hsl(240, 76%, 87%);
+}
+
+.chat-container {
   display: flex;
   flex-direction: column;
+  max-height: 80vh;
+  min-height: 200px;
+  max-width: 900px;
+  width: 80%;
+  padding: 20px;
+  border-radius: 10px;
+
+  background-color: hsla(235, 30%, 8%, 0.6);
+  backdrop-filter: blur(1px);
+  border: 0.25px solid hsla(235, 30%, 20%, 0.4);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.chat-box {
+  flex-grow: 1;
+  width: 100%;
+  min-height: 100px;
+  margin-bottom: 20px;
+  overflow-y: auto;
+}
+
+.input-form {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.input {
+  flex-grow: 1;
+  min-width: 70px;
+  border-radius: 5px;
+  margin-left: 5px;
+  padding: 10px;
+  border: 0px;
+  background-color: hsl(235, 20%, 15%);
+  color: hsl(240, 25%, 75%);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: inset 0px 0px 12px 0px hsla(235, 20%, 10%, 0.98);
+}
+
+.heading {
+  text-align: left;
+  margin-left: 5px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  background-clip: text;
+  background: hsl(235, 55%, 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.button {
+  background-color: hsl(235, 55%, 45%);
+  color: hsl(235, 75%, 85%);
+
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-left: 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: background-color 0.16s ease-in;
+}
+
+.button:hover {
+  background-color: hsl(235, 50%, 35%);
+}
+
+.message {
+  display: inline-block;
+  max-width: 70%;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  overflow-wrap: break-word;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.message li {
+  white-space: normal;
+}
+
+.message code {
+  border-radius: 8px;
+}
+
+.user-message {
+  background-color: hsl(235, 55%, 45%);
+  color: hsl(240, 76%, 90%);
+  float: right;
+  clear: both;
+}
+
+.assistant-message {
+  background-color: hsl(235, 23%, 65%);
+  color: hsl(240, 30%, 25%);
+  float: left;
+  clear: both;
+}
+
+.message * {
+  margin: 0px;
+}
+
+/* Menubar styles */
+.menubar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  backdrop-filter: blur(1px);
+  border-bottom: 0.25px solid hsla(235, 30%, 20%, 0.4);
+  z-index: 1000;
+
+  /* Changes to center menubar */
+  justify-content: flex-start; /* new, may not be needed */
+  background-color: hsla(235, 20%, 15%, 0.9);
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  border-radius: 10px;
+  height: 20px;
   align-items: center;
+}
+
+.settings-toggle {
+  background-color: transparent;
+  color: hsl(240, 76%, 87%);
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.settings-toggle:hover {
+  color: hsl(240, 76%, 67%);
+}
+
+.settings-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding: 10px;
+  background-color: hsla(235, 20%, 10%, 0.9); /* new */
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+/* Stack settings on top of eachother */
+.settings-dropdown input,
+.settings-dropdown select {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+.settings-dropdown > * {
+  margin-bottom: 5px;
+}
+
+.settings-dropdown > *:last-child {
+  margin-bottom: 0;
+}
+
+.model-toggle-container {
+  display: flex;
+  align-items: center;
+}
+
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 5em;
+  height: 2em;
+  margin-left: 15px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: hsl(240, 20%, 20%);
+  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
+  transition: .4s;
+  border-radius: 5px;
+
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.link {
-  color: #b318f0;
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 0.1em;
+  border-radius: 0px;
+  left: 0.3em;
+  bottom: 0.3em;
+  background-color: white;
+  transition: .4s;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input:checked + .slider {
+  background-color: hsl(240, 10%, 15%);
+  box-shadow: inset 2px 5px 10px rgba(0, 0, 0,0.3);
+}
+
+input:checked + .slider:before {
+  transform: translateX(4.25em) rotate(360deg); /* slider animation length, may not be perfect */
+}
+
+#model-label {
+  color: hsl(240, 76%, 87%);
 }
