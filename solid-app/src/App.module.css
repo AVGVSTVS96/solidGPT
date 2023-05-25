@@ -260,8 +260,8 @@ body {
   right: 0;
   bottom: 0;
   background-color: hsl(240, 20%, 20%);
-  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
-  transition: .4s;
+  box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
+  transition: 0.4s;
   border-radius: 5px;
 
   display: flex;
@@ -278,12 +278,12 @@ body {
   left: 0.3em;
   bottom: 0.3em;
   background-color: white;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
   background-color: hsl(240, 10%, 15%);
-  box-shadow: inset 2px 5px 10px rgba(0, 0, 0,0.3);
+  box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 input:checked + .slider:before {

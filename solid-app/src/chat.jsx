@@ -1,6 +1,6 @@
-import { createSignal, onMount, onCleanup } from 'solid-js';
-import { renderMarkdown, highlightCode } from './utils';
-import styles from './App.module.css';
+import { createSignal, onMount, onCleanup } from "solid-js";
+import { renderMarkdown, highlightCode } from "./utils";
+import styles from "./App.module.css";
 
 function Chat({ systemMessage, modelName }) {
   const [messages, setMessages] = createSignal([]);
@@ -46,17 +46,23 @@ function Chat({ systemMessage, modelName }) {
   };
 
   return (
-    <div class={styles['chat-container']}>
+    <div class={styles["chat-container"]}>
       <h1 class={styles.heading}>Canvas GPT</h1>
-      <div class={styles['chat-wrapper']}>
-        <div id="chat-messages" class={styles['chat-box']}>
+      <div class={styles["chat-wrapper"]}>
+        <div id="chat-messages" class={styles["chat-box"]}>
           {messages().map((message, index) => (
-            <div key={index} class={message.role === "user" ? styles['user-message'] : styles['assistant-message']}>
+            <div
+              key={index}
+              class={
+                message.role === "user"
+                  ? styles["user-message"]
+                  : styles["assistant-message"]
+              }>
               <p ref={highlightCode} innerHTML={renderMarkdown(message.content)} />
             </div>
           ))}
         </div>
-        <form id="chat-form" class={styles['input-form']} onSubmit={handleSubmit}>
+        <form id="chat-form" class={styles["input-form"]} onSubmit={handleSubmit}>
           <textarea
             type="text"
             class={styles.input}
@@ -64,9 +70,10 @@ function Chat({ systemMessage, modelName }) {
             name="user_input"
             placeholder="Type your message..."
             value={userInput()}
-            onInput={(e) => setUserInput(e.target.value)}
-          ></textarea>
-          <button class={styles.button} type="submit" id="submitBtn">Send</button>
+            onInput={(e) => setUserInput(e.target.value)}></textarea>
+          <button class={styles.button} type="submit" id="submitBtn">
+            Send
+          </button>
         </form>
       </div>
     </div>
