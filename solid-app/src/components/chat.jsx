@@ -1,6 +1,6 @@
 import { createSignal, onMount, onCleanup } from "solid-js";
-import { renderMarkdown, highlightCode } from "./utils";
-import styles from "./App.module.css";
+import { renderMarkdown, highlightCode } from "../utils";
+import styles from "./chat.module.css";
 
 function Chat({ systemMessage, modelName }) {
   const [messages, setMessages] = createSignal([]);
